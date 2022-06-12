@@ -5,6 +5,7 @@
 }
 
 body {
+    margin-top: 10px;
     height: 100vh;
     background-color: gray;
     display: flex;
@@ -29,6 +30,8 @@ button:hover {
 .header {
     background-color: aqua;
     height: 100px;
+    border-bottom: 2px;
+    border-style: solid;
     flex-shrink: 0;
     display: flex;
     justify-content: center;
@@ -90,13 +93,13 @@ button:hover {
 }
 
 .calculate { /*THIS IS THE = BUTTON */ 
-    width: 150px;
+    width: 250px;
 }
 
 
 .calcNumberScreen {
     height: 70px;
-    width: 400px;
+    width: 450px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -105,6 +108,7 @@ button:hover {
 .calcNumberInput {
     height: 70px;
     width: 450px;
+    padding-right: 10px;
     text-align: right;
     font-size: 40px;
     font-family: "Lucida Console", Monaco, Roboto;

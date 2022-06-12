@@ -11,7 +11,7 @@ headline.setAttribute('id','headline');
 const headerPara = document.createElement('p');
 headerPara.setAttribute('class', 'headerPara');
 headerPara.setAttribute('id','headerPara');
-headerPara.textContent = "CALC - U - LATE header";
+headerPara.textContent = "CALC - U - LATE 30000";
 headline.appendChild(headerPara);
 header.appendChild(headline);
 
