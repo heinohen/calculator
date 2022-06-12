@@ -22,11 +22,11 @@ button {
     border-radius: 20px;
     font-size: 30px;
     box-shadow: 1px 2px;
+    background-color: white;
 }
 button:hover {
-    background-color: red;
+    background-color: lightpink;
 }
-
 
 .header {
     background-color: aqua;
@@ -88,6 +88,7 @@ button:hover {
     background-color: lightgray;
     margin: 20px;
     border-radius: 20px;
+    border-style: solid;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

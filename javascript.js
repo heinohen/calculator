@@ -7,18 +7,18 @@ const footer = document.querySelector('#footer');
 //header
 const headline = document.createElement('div');
 headline.setAttribute('class', 'headline');
-headline.setAttribute('id','headline');
+headline.setAttribute('id', 'headline');
 const headerPara = document.createElement('p');
 headerPara.setAttribute('class', 'headerPara');
-headerPara.setAttribute('id','headerPara');
-headerPara.textContent = "CALC - U - LATE 30000";
+headerPara.setAttribute('id', 'headerPara');
+headerPara.textContent = "CALCUGATOR 30000";
 headline.appendChild(headerPara);
 header.appendChild(headline);
 
 //main
 const calculator = document.createElement('div');
 calculator.setAttribute('class', 'calculator');
-calculator.setAttribute('id','calculator');
+calculator.setAttribute('id', 'calculator');
 main.appendChild(calculator)
 
 //calculator frame
@@ -31,9 +31,9 @@ const calcNamePara = document.createElement('p');
 const calcStylePara = document.createElement('p')
 calcNamePara.setAttribute('class', 'calcNamePara');
 calcNamePara.setAttribute('id', 'calcNamePara');
-calcNamePara.textContent = "CALC - U - LATE"
+calcNamePara.textContent = "CALCUGATOR"
 calcStylePara.setAttribute('class', 'calcStylePara');
-calcStylePara.setAttribute('id','calcStylePara');
+calcStylePara.setAttribute('id', 'calcStylePara');
 calcStylePara.textContent = "30000";
 calcNameDiv.appendChild(calcNamePara);
 calcNameDiv.appendChild(calcStylePara);
@@ -44,21 +44,22 @@ calcNumberDiv.setAttribute('class', 'calcNumberDiv');
 calcNumberDiv.setAttribute('id', 'calcNumberDiv');
 const calcNumberScreen = document.createElement('form')
 calcNumberScreen.setAttribute('class', 'calcNumberScreen')
-calcNumberScreen.setAttribute('id','calcNumberScreen');
+calcNumberScreen.setAttribute('id', 'calcNumberScreen');
 
 //calculator numberinput
+let value = "0";
 const calcNumberInput = document.createElement('input');
 calcNumberInput.setAttribute('class', 'calcNumberInput')
 calcNumberInput.type = "text";
-calcNumberInput.value = "699696969696"
+calcNumberInput.value = value;
 calcNumberInput.disabled = true;
 calcNumberScreen.appendChild(calcNumberInput);
 calcNumberDiv.appendChild(calcNumberScreen);
 
 //calculator buttons frame
 const calcButtonsFrame = document.createElement('div');
-calcButtonsFrame.setAttribute('class','buttonsFrameDiv');
-calcButtonsFrame.setAttribute('id','buttonsFrameDiv');
+calcButtonsFrame.setAttribute('class', 'buttonsFrameDiv');
+calcButtonsFrame.setAttribute('id', 'buttonsFrameDiv');
 
 //row 1
 const button7 = document.createElement('button');
@@ -67,18 +68,18 @@ const button8 = document.createElement('button');
 button8.textContent = "8";
 const button9 = document.createElement('button');
 button9.textContent = "9";
-const buttonAC = document.createElement('button');
-buttonAC.textContent = "AC";
+const buttonC = document.createElement('button');
+buttonC.textContent = "C";
 const buttonPlusMinus = document.createElement('button');
 buttonPlusMinus.textContent = "+/-";
 
 const row1 = document.createElement('div');
-row1.setAttribute('class','row1');
+row1.setAttribute('class', 'row1');
 row1.setAttribute('id', 'row1');
 row1.appendChild(button7);
 row1.appendChild(button8);
 row1.appendChild(button9);
-row1.appendChild(buttonAC);
+row1.appendChild(buttonC);
 row1.appendChild(buttonPlusMinus);
 
 //row 2
@@ -93,7 +94,7 @@ buttonMultiply.textContent = "x";
 const buttonDivide = document.createElement('button');
 buttonDivide.textContent = "÷";
 const row2 = document.createElement('div');
-row2.setAttribute('class','row2');
+row2.setAttribute('class', 'row2');
 row2.setAttribute('id', 'row2');
 row2.appendChild(button4);
 row2.appendChild(button5);
@@ -114,7 +115,7 @@ const buttonMinus = document.createElement('button');
 buttonMinus.textContent = "-";
 
 const row3 = document.createElement('div');
-row3.setAttribute('class','row3');
+row3.setAttribute('class', 'row3');
 row3.setAttribute('id', 'row3');
 row3.appendChild(button1);
 row3.appendChild(button2);
@@ -131,7 +132,7 @@ const buttonCalculate = document.createElement('button');
 buttonCalculate.textContent = "=";
 buttonCalculate.setAttribute('class', 'calculate');
 const row4 = document.createElement('div');
-row4.setAttribute('class','row4');
+row4.setAttribute('class', 'row4');
 row4.setAttribute('id', 'row4');
 row4.appendChild(button0);
 row4.appendChild(buttonComma);
@@ -148,6 +149,82 @@ calculator.appendChild(calcNameDiv);
 calculator.appendChild(calcNumberDiv);
 calculator.appendChild(calcNumberDiv);
 calculator.appendChild(calcButtonsFrame);
+
+//calc functionality 
+function clearScreen() {
+    value = "0";
+    calcNumberInput.value = "0";  
+}
+
+//add number on right side of last
+function appendScreen(number) {
+    if (value.length >= 16) {
+        return;
+    }
+    console.log(number);
+    if (value == "0") {
+        value = number;
+        calcNumberInput.value = number;
+        console.log("value set to", value)
+    } else {
+        value = value.concat("",number);
+        calcNumberInput.value = value;
+        console.log(value);
+    }
+}
+
+//change positive or negative
+function changePositive() {
+    if (value.charAt(0) == "-") {
+        value = value.slice(1);
+        calcNumberInput.value = value;
+    } else {
+        let minus = "-";
+        minus = minus.concat("",value);
+        value = minus;
+        calcNumberInput.value = value;
+
+    }
+}
+
+//add comma after number
+function addComma() {
+    if (value.length >= 16) {
+        return;
+    }
+    value = value.concat("", ",");
+    calcNumberInput.value = value;
+}
+
+buttonC.onclick = () => clearScreen()
+button7.onclick = () => appendScreen("7")
+button8.onclick = () => appendScreen("8")
+button9.onclick = () => appendScreen("9")
+button4.onclick = () => appendScreen("4")
+button5.onclick = () => appendScreen("5")
+button6.onclick = () => appendScreen("6")
+button1.onclick = () => appendScreen("1")
+button2.onclick = () => appendScreen("2")
+button3.onclick = () => appendScreen("3")
+button0.onclick = () => appendScreen("0")
+buttonComma.onclick = () => addComma()
+buttonPlusMinus.onclick = () => changePositive()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //footer
 const footerLegal = document.createElement('p');
