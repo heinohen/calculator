@@ -48,6 +48,7 @@ calcNumberScreen.setAttribute('id', 'calcNumberScreen');
 
 //calculator numberinput
 let value = "0";
+let operator = "";
 const calcNumberInput = document.createElement('input');
 calcNumberInput.setAttribute('class', 'calcNumberInput')
 calcNumberInput.type = "text";
@@ -90,8 +91,10 @@ button5.textContent = "5";
 const button6 = document.createElement('button');
 button6.textContent = "6";
 const buttonMultiply = document.createElement('button');
+buttonMultiply.setAttribute('id','canClear');
 buttonMultiply.textContent = "x";
 const buttonDivide = document.createElement('button');
+buttonDivide.setAttribute('id','canClear');
 buttonDivide.textContent = "÷";
 const row2 = document.createElement('div');
 row2.setAttribute('class', 'row2');
@@ -110,8 +113,10 @@ button2.textContent = "2";
 const button3 = document.createElement('button');
 button3.textContent = "3";
 const buttonPlus = document.createElement('button');
+buttonPlus.setAttribute('id','canClear');
 buttonPlus.textContent = "+";
 const buttonMinus = document.createElement('button');
+buttonMinus.setAttribute('id','canClear');
 buttonMinus.textContent = "-";
 
 const row3 = document.createElement('div');
@@ -151,14 +156,27 @@ calculator.appendChild(calcNumberDiv);
 calculator.appendChild(calcButtonsFrame);
 
 //calc functionality 
+
+//clear screen
 function clearScreen() {
+    clearButtons();   
+    numsArray = [];
     value = "0";
     calcNumberInput.value = "0";  
+}
+
+//clear button colors
+function clearButtons() {
+    const cleared = document.querySelectorAll('#canClear');
+    cleared.forEach((clearThis) => {
+        clearThis.style.backgroundColor = "white";
+    });
 }
 
 //add number on right side of last
 function appendScreen(number) {
     if (value.length >= 16) {
+        calcNumberInput.value = "OVERFLOW"
         return;
     }
     console.log(number);
@@ -166,12 +184,20 @@ function appendScreen(number) {
         value = number;
         calcNumberInput.value = number;
         console.log("value set to", value)
+    } else if (value == "-0") {
+        let minus = "-";
+        minus = minus.concat("",value);
+        value = minus;
+        calcNumberInput.value = value; 
     } else {
         value = value.concat("",number);
         calcNumberInput.value = value;
         console.log(value);
+
     }
+        
 }
+
 
 //change positive or negative
 function changePositive() {
@@ -190,11 +216,54 @@ function changePositive() {
 //add comma after number
 function addComma() {
     if (value.length >= 16) {
+        calcNumberInput.value = "OVERFLOW"
         return;
     }
     value = value.concat("", ",");
     calcNumberInput.value = value;
 }
+
+
+//where we store our numbers for operations
+let numsArray = []
+
+
+//press of multiply button
+function multiply() {
+    buttonMultiply.style.backgroundColor = "green";
+    numsArray.push(parseInt(value));
+    value = "0";
+    calcNumberInput.value = value;
+    operator = "*";
+    console.table(numsArray)
+}
+
+//press of plus button
+function plus() {
+    buttonPlus.style.backgroundColor = "yellow";
+    numsArray.push(parseInt(value));
+    value = "0";
+    calcNumberInput.value = value;
+    operator = "+";
+    console.table(numsArray)
+}
+
+//press of divide button
+function divide() {
+    buttonDivide.style.backgroundColor = "cyan";
+}
+
+//press of minus button
+function minus() {
+    buttonMinus.style.backgroundColor = "pink";
+}
+
+//press of compute button
+function executeOperation() {
+    clearButtons();
+    
+}
+
 
 buttonC.onclick = () => clearScreen()
 button7.onclick = () => appendScreen("7")
@@ -208,7 +277,12 @@ button2.onclick = () => appendScreen("2")
 button3.onclick = () => appendScreen("3")
 button0.onclick = () => appendScreen("0")
 buttonComma.onclick = () => addComma()
+buttonCalculate.onclick = () => executeOperation()
 buttonPlusMinus.onclick = () => changePositive()
+buttonMultiply.onclick = () => multiply()
+buttonDivide.onclick = () => divide()
+buttonPlus.onclick = () => plus()
+buttonMinus.onclick = () => minus()
 
 
 
