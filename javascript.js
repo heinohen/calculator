@@ -132,7 +132,7 @@ row3.appendChild(buttonMinus);
 const button0 = document.createElement('button');
 button0.textContent = "0";
 const buttonComma = document.createElement('button');
-buttonComma.textContent = ",";
+buttonComma.textContent = ".";
 const buttonCalculate = document.createElement('button');
 buttonCalculate.textContent = "=";
 buttonCalculate.setAttribute('class', 'calculate');
@@ -156,13 +156,18 @@ calculator.appendChild(calcNumberDiv);
 calculator.appendChild(calcButtonsFrame);
 
 //calc functionality 
+let a;
+let b;
 
 //clear screen
 function clearScreen() {
-    clearButtons();   
-    numsArray = [];
+    clearButtons();
+    enableButtons() 
+    a = 0;
+    b = 0;  
     value = "0";
-    calcNumberInput.value = "0";  
+    calcNumberInput.value = "0"; 
+    buttonCalculate.disabled = false; 
 }
 
 //clear button colors
@@ -173,27 +178,50 @@ function clearButtons() {
     });
 }
 
+//enable operator buttons 
+function enableButtons() {
+    const cleared = document.querySelectorAll('#canClear');
+    cleared.forEach((clearThis) => {
+        clearThis.disabled = false;
+    });
+}
+
+//disable operator buttons
+function disableButtons() {
+    const cleared = document.querySelectorAll('#canClear');
+    cleared.forEach((clearThis) => {
+        clearThis.disabled = true;
+    });
+}
+
+function checkIfOverflow() {
+    if (value.toString().length >= 16) {
+        calcNumberInput.value = "OVERFLOW";
+        buttonCalculate.disabled = true;
+        return true;
+    }
+    return false;
+}
+
+
+
 //add number on right side of last
 function appendScreen(number) {
     if (value.length >= 16) {
         calcNumberInput.value = "OVERFLOW"
         return;
     }
-    console.log(number);
     if (value == "0") {
         value = number;
         calcNumberInput.value = number;
-        console.log("value set to", value)
     } else if (value == "-0") {
         let minus = "-";
-        minus = minus.concat("",value);
+        minus = minus.concat("",value.slice(1));
         value = minus;
         calcNumberInput.value = value; 
     } else {
         value = value.concat("",number);
         calcNumberInput.value = value;
-        console.log(value);
-
     }
         
 }
@@ -215,52 +243,104 @@ function changePositive() {
 
 //add comma after number
 function addComma() {
+    if (value.indexOf(".") != -1) {
+        return;
+    }
     if (value.length >= 16) {
         calcNumberInput.value = "OVERFLOW"
         return;
     }
-    value = value.concat("", ",");
+    value = value.concat("", ".");
     calcNumberInput.value = value;
 }
 
 
-//where we store our numbers for operations
-let numsArray = []
 
 
 //press of multiply button
 function multiply() {
+    disableButtons();
     buttonMultiply.style.backgroundColor = "green";
-    numsArray.push(parseInt(value));
-    value = "0";
-    calcNumberInput.value = value;
     operator = "*";
-    console.table(numsArray)
+    a = parseInt(value);
+    value = "";
+    calcNumberInput.value = value;
 }
 
 //press of plus button
 function plus() {
+    disableButtons();
     buttonPlus.style.backgroundColor = "yellow";
-    numsArray.push(parseInt(value));
-    value = "0";
-    calcNumberInput.value = value;
     operator = "+";
-    console.table(numsArray)
+    a = parseInt(value);
+    value = "";
+    calcNumberInput.value = value;
 }
 
 //press of divide button
 function divide() {
+    disableButtons();
     buttonDivide.style.backgroundColor = "cyan";
+    operator = "/";
+    a = parseInt(value);
+    value = "";
+    calcNumberInput.value = value;
+
 }
 
 //press of minus button
 function minus() {
+    disableButtons();
     buttonMinus.style.backgroundColor = "pink";
+    operator = "-";
+    a = parseInt(value);
+    value = "";
+    calcNumberInput.value = value;
+
 }
 
 //press of compute button
 function executeOperation() {
+    b = parseInt(value);
     clearButtons();
+    enableButtons()
+
+    switch(operator) {
+        case "+":
+            value = a + b;
+            if (checkIfOverflow()) {
+                return;
+            }
+            calcNumberInput.value = value.toString();
+            break;
+        case "*":
+            value = Math.round(parseFloat(a * b));
+            if (checkIfOverflow()) {
+                return;
+            }
+            calcNumberInput.value = value.toString();
+            break;
+        case "-":
+            value = Math.round(parseFloat(a - b));
+            if (checkIfOverflow()) {
+                return;
+            }
+            calcNumberInput.value = value.toString();
+            break;
+        case "/":
+            if (a == 0 || b == 0) {
+                calcNumberInput.value = "Cannot / by zero";
+                disableButtons();
+                return;
+            }
+            value = Math.round(parseFloat(a / b));
+            if (checkIfOverflow()) {
+                return;
+            }
+            calcNumberInput.value = value.toString();
+            break;
+        
+    }
     
 }
 
