@@ -28,10 +28,15 @@ calcNameDiv.setAttribute('id', 'calcNameDiv');
 
 //calculator namefield "upper"
 const calcNamePara = document.createElement('p');
+const calcStylePara = document.createElement('p')
 calcNamePara.setAttribute('class', 'calcNamePara');
 calcNamePara.setAttribute('id', 'calcNamePara');
 calcNamePara.textContent = "CALC - U - LATE"
+calcStylePara.setAttribute('class', 'calcStylePara');
+calcStylePara.setAttribute('id','calcStylePara');
+calcStylePara.textContent = "30000";
 calcNameDiv.appendChild(calcNamePara);
+calcNameDiv.appendChild(calcStylePara);
 
 //calculator numberscreen
 const calcNumberDiv = document.createElement('div')
@@ -148,4 +153,14 @@ calculator.appendChild(calcButtonsFrame);
 const footerLegal = document.createElement('p');
 footerLegal.setAttribute('class', 'footerPara');
 footerLegal.textContent = "(C) heinohen 2022";
+
+const footerGit = document.createElement('a');
+footerGit.setAttribute('id', 'gitLink');
+const footerImg = document.createElement('img');
+footerImg.src = "./images/GitHub-Mark-32px.png";
+footerImg.alt = "github picture";
+footerGit.href = "https://github.com/heinohen";
+footerGit.appendChild(footerImg);
+
 footer.appendChild(footerLegal);
+footer.appendChild(footerGit);
