@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    background-color: gray;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-family: "Lucida Console", Monaco, Roboto;
+    
+}
+
+button {
+    height: 60px;
+    width: 70px;
+    margin: 10px;
+    border-radius: 20px;
+    font-size: 30px;
+}
+button:hover {
+    background-color: red;
+}
+
+
+.header {
+    background-color: aqua;
+    height: 100px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main {
+    background-color: red;
+    height: auto;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.calculator { /*this is the actual frame of calculator */
+    background-color: yellow;
+    height: 500px;
+    width: 500px;
+    border-radius: 20px;
+    border: 2px;
+    border-color: black;
+    border-style: ridge;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    
+}
+
+.calcNameDiv {
+
+    height: 30px;
+    padding: 10px;
+    
+}
+
+.calcNumberDiv {
+    height: 100px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+.buttonsFrameDiv {
+    flex: 1;
+    background-color: gray;
+    margin: 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    
+}
+
+.calculate { /*THIS IS THE = BUTTON */ 
+    width: 150px;
+}
+
+
+.calcNumberScreen {
+    height: 70px;
+    width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calcNumberInput {
+    height: 70px;
+    width: 450px;
+    text-align: right;
+    font-size: 40px;
+    font-family: "Lucida Console", Monaco, Roboto;
+    border-radius: 20px;
+}
+
+.calcNumberInput:disabled {
+    cursor: default;
+    color: red;
+    background-color: white;
+}
+
+
+
+.footer {
+    background-color: black;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footerPara {
+    color: aliceblue;
+}
