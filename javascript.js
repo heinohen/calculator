@@ -47,12 +47,10 @@ calcNumberScreen.setAttribute('class', 'calcNumberScreen')
 calcNumberScreen.setAttribute('id', 'calcNumberScreen');
 
 //calculator numberinput
-let value = "0";
-let operator = "";
 const calcNumberInput = document.createElement('input');
 calcNumberInput.setAttribute('class', 'calcNumberInput')
 calcNumberInput.type = "text";
-calcNumberInput.value = value;
+calcNumberInput.value = "0";
 calcNumberInput.disabled = true;
 calcNumberScreen.appendChild(calcNumberInput);
 calcNumberDiv.appendChild(calcNumberScreen);
@@ -156,193 +154,62 @@ calculator.appendChild(calcNumberDiv);
 calculator.appendChild(calcButtonsFrame);
 
 //calc functionality 
-let a;
-let b;
 
-//clear screen
+
+let firstNumber = null;
+let secondNumber = null;
+let firstOperator = null;
+let secondOperator = null;
+let sum = null;
+let displayValue = calcNumberInput.value;
+
+
+function updateScreen() {
+    calcNumberInput.value = displayValue
+}
+
 function clearScreen() {
-    clearButtons();
-    enableButtons() 
-    a = 0;
-    b = 0;  
-    value = "0";
-    calcNumberInput.value = "0"; 
-    buttonCalculate.disabled = false; 
-}
-
-//clear button colors
-function clearButtons() {
-    const cleared = document.querySelectorAll('#canClear');
-    cleared.forEach((clearThis) => {
-        clearThis.style.backgroundColor = "white";
-    });
-}
-
-//enable operator buttons 
-function enableButtons() {
-    const cleared = document.querySelectorAll('#canClear');
-    cleared.forEach((clearThis) => {
-        clearThis.disabled = false;
-    });
-}
-
-//disable operator buttons
-function disableButtons() {
-    const cleared = document.querySelectorAll('#canClear');
-    cleared.forEach((clearThis) => {
-        clearThis.disabled = true;
-    });
-}
-
-function checkIfOverflow() {
-    if (value.toString().length >= 16) {
-        calcNumberInput.value = "OVERFLOW";
-        buttonCalculate.disabled = true;
-        return true;
-    }
-    return false;
+    displayValue = "0";
+    updateScreen();
+    firstNumber = null;
+    secondNumber = null;
+    firstOperator = null;
+    secondOperator = null;
 }
 
 
-
-//add number on right side of last
-function appendScreen(number) {
-    if (value.length >= 16) {
-        calcNumberInput.value = "OVERFLOW"
-        return;
-    }
-    if (value == "0") {
-        value = number;
-        calcNumberInput.value = number;
-    } else if (value == "-0") {
-        let minus = "-";
-        minus = minus.concat("",value.slice(1));
-        value = minus;
-        calcNumberInput.value = value; 
+function appendScreen(num) {
+    if (displayValue.length >= 15){return;}
+    if (displayValue == "0") {
+        console.log(num);
+        displayValue = num;
+        updateScreen();
     } else {
-        value = value.concat("",number);
-        calcNumberInput.value = value;
+        displayValue += num;
+        console.log(num);
+        updateScreen();
     }
-        
 }
 
-
-//change positive or negative
 function changePositive() {
-    if (value.charAt(0) == "-") {
-        value = value.slice(1);
-        calcNumberInput.value = value;
-    } else {
-        let minus = "-";
-        minus = minus.concat("",value);
-        value = minus;
-        calcNumberInput.value = value;
-
-    }
+    displayValue = Number(displayValue * -1);
+    updateScreen();
 }
 
-//add comma after number
 function addComma() {
-    if (value.indexOf(".") != -1) {
+    if (displayValue.indexOf(".") > -1) {
         return;
     }
-    if (value.length >= 16) {
-        calcNumberInput.value = "OVERFLOW"
-        return;
+    if (displayValue == "0") {
+        displayValue = "0."
+        updateScreen();
+    } else {
+        displayValue += ".";
+        updateScreen();
     }
-    value = value.concat("", ".");
-    calcNumberInput.value = value;
 }
 
 
-
-
-//press of multiply button
-function multiply() {
-    disableButtons();
-    buttonMultiply.style.backgroundColor = "green";
-    operator = "*";
-    a = parseInt(value);
-    value = "";
-    calcNumberInput.value = value;
-}
-
-//press of plus button
-function plus() {
-    disableButtons();
-    buttonPlus.style.backgroundColor = "yellow";
-    operator = "+";
-    a = parseInt(value);
-    value = "";
-    calcNumberInput.value = value;
-}
-
-//press of divide button
-function divide() {
-    disableButtons();
-    buttonDivide.style.backgroundColor = "cyan";
-    operator = "/";
-    a = parseInt(value);
-    value = "";
-    calcNumberInput.value = value;
-
-}
-
-//press of minus button
-function minus() {
-    disableButtons();
-    buttonMinus.style.backgroundColor = "pink";
-    operator = "-";
-    a = parseInt(value);
-    value = "";
-    calcNumberInput.value = value;
-
-}
-
-//press of compute button
-function executeOperation() {
-    b = parseInt(value);
-    clearButtons();
-    enableButtons()
-
-    switch(operator) {
-        case "+":
-            value = a + b;
-            if (checkIfOverflow()) {
-                return;
-            }
-            calcNumberInput.value = value.toString();
-            break;
-        case "*":
-            value = Math.round(parseFloat(a * b));
-            if (checkIfOverflow()) {
-                return;
-            }
-            calcNumberInput.value = value.toString();
-            break;
-        case "-":
-            value = Math.round(parseFloat(a - b));
-            if (checkIfOverflow()) {
-                return;
-            }
-            calcNumberInput.value = value.toString();
-            break;
-        case "/":
-            if (a == 0 || b == 0) {
-                calcNumberInput.value = "Cannot / by zero";
-                disableButtons();
-                return;
-            }
-            value = Math.round(parseFloat(a / b));
-            if (checkIfOverflow()) {
-                return;
-            }
-            calcNumberInput.value = value.toString();
-            break;
-        
-    }
-    
-}
 
 
 buttonC.onclick = () => clearScreen()
@@ -356,13 +223,13 @@ button1.onclick = () => appendScreen("1")
 button2.onclick = () => appendScreen("2")
 button3.onclick = () => appendScreen("3")
 button0.onclick = () => appendScreen("0")
-buttonComma.onclick = () => addComma()
+buttonComma.onclick = () => addComma() //works
 buttonCalculate.onclick = () => executeOperation()
-buttonPlusMinus.onclick = () => changePositive()
-buttonMultiply.onclick = () => multiply()
-buttonDivide.onclick = () => divide()
-buttonPlus.onclick = () => plus()
-buttonMinus.onclick = () => minus()
+buttonPlusMinus.onclick = () => changePositive() //works
+buttonMultiply.onclick = () => insertOperator("*")
+buttonDivide.onclick = () => insertOperator("/")
+buttonPlus.onclick = () => insertOperator("+")
+buttonMinus.onclick = () => insertOperator("-")
 
 
 
