@@ -161,6 +161,7 @@ let secondNumber = null;
 let firstOperator = null;
 let secondOperator = null;
 let sum = null;
+let calculated = false;
 let displayValue = calcNumberInput.value;
 
 
@@ -179,16 +180,19 @@ function clearScreen() {
 
 
 function appendScreen(num) {
-    if (displayValue.length >= 15){return;}
-    if (displayValue == "0") {
+    if (!calculated) {
+        if (displayValue.length >= 15){return;}
+        if (displayValue == "0") {
         console.log(num);
         displayValue = num;
         updateScreen();
-    } else {
+        } else {
         displayValue += num;
         console.log(num);
         updateScreen();
     }
+    }
+    
 }
 
 function changePositive() {
@@ -209,6 +213,54 @@ function addComma() {
     }
 }
 
+function insertOperator(operator) {sum = "Cannot / by 0";
+        firstOperator = operator;
+        displayValue = "";
+        updateScreen();
+    } else if (firstOperator != null && secondOperator == null) {
+        secondOperator = operator;
+        secondNumber = displayValue;
+    }
+
+    if (secondOperator == "=") {
+        calculated = true;
+        makeCalculation(firstNumber, secondNumber, firstOperator);
+        console.log(sum);
+        firstOperator = null;
+        secondOperator = null;
+        displayValue = sum;
+        updateScreen();
+
+        
+    }
+}
+function makeCalculation(firstNumber, secondNumber, firstOperator) {
+    switch(firstOperator) {
+        case "+":
+            sum = Number(firstNumber) + Number(secondNumber);
+            console.log("calculated", firstNumber, firstOperator, secondNumber, "=", sum);
+
+            break;
+        case "-":
+            sum = Number(firstNumber) - Number(secondNumber);
+            console.log("calculated", firstNumber, firstOperator, secondNumber, "=", sum);
+            break;
+        case "*":
+            sum = Number(firstNumber) * Number(secondNumber);
+            console.log("calculated", firstNumber, firstOperator, secondNumber, "=", sum);
+            break;
+        case "/":
+            if (firstNumber == "0" || secondNumber == "0") {
+                clearScreen();
+                sum = "Cannot / by 0";
+                break;
+            }
+            sum = Number(firstNumber) / Number(secondNumber);
+            console.log("calculated", firstNumber, firstOperator, secondNumber, "=", sum);
+            break;
+    }
+}
+
 
 
 
@@ -224,13 +276,12 @@ button2.onclick = () => appendScreen("2")
 button3.onclick = () => appendScreen("3")
 button0.onclick = () => appendScreen("0")
 buttonComma.onclick = () => addComma() //works
-buttonCalculate.onclick = () => executeOperation()
+buttonCalculate.onclick = () => insertOperator("=");
 buttonPlusMinus.onclick = () => changePositive() //works
-buttonMultiply.onclick = () => insertOperator("*")
-buttonDivide.onclick = () => insertOperator("/")
-buttonPlus.onclick = () => insertOperator("+")
-buttonMinus.onclick = () => insertOperator("-")
-
+buttonMultiply.onclick = () => insertOperator("*");
+buttonDivide.onclick = () => insertOperator("/");
+buttonPlus.onclick = () => insertOperator("+");
+buttonMinus.onclick = () => insertOperator("-");
 
 
 

@@ -114,14 +114,14 @@ button:hover {
     width: 450px;
     padding-right: 10px;
     text-align: right;
-    font-size: 40px;
+    font-size: 50px;
     font-family: "Lucida Console", Monaco, Roboto;
     border-radius: 20px;
 }
 
 .calcNumberInput:disabled {
     cursor: default;
-    color: red;
+    color: black;
     background-color: white;
 }
 
