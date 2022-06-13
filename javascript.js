@@ -180,7 +180,9 @@ function clearScreen() {
 
 
 function appendScreen(num) {
-    if (!calculated) {
+    if (calculated) {
+        return;
+    } else {
         if (displayValue.length >= 15){return;}
         if (displayValue == "0") {
         console.log(num);
@@ -190,9 +192,9 @@ function appendScreen(num) {
         displayValue += num;
         console.log(num);
         updateScreen();
+        }
     }
-    }
-    
+ 
 }
 
 function changePositive() {
@@ -224,6 +226,7 @@ function insertOperator(operator) {
         firstOperator = operator;
         displayValue = "";
         updateScreen();
+        return;
     } else if (firstOperator != null && secondOperator == null) {
         secondOperator = operator;
         secondNumber = displayValue;
@@ -232,15 +235,24 @@ function insertOperator(operator) {
     if (secondOperator == "=") {
         calculated = true;
         makeCalculation(firstNumber, secondNumber, firstOperator);
-        console.log(sum);
+        console.log("end of operation");
         firstOperator = null;
         secondOperator = null;
         displayValue = sum;
+        updateScreen();   
+    } else {
+        makeCalculation(firstNumber, secondNumber, firstOperator);
+        console.log("chaining");
+        firstNumber = sum;
+        secondNumber = null;
+        displayValue = sum;
         updateScreen();
-
-        
     }
+    console.log("is it calculated", calculated)
 }
+
+
+
 function makeCalculation(firstNumber, secondNumber, firstOperator) {
     switch(firstOperator) {
         case "+":
@@ -291,20 +303,6 @@ buttonPlus.onclick = () => insertOperator("+");
 buttonMinus.onclick = () => insertOperator("-");
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //footer
 const footerLegal = document.createElement('p');
 footerLegal.setAttribute('class', 'footerPara');
@@ -316,7 +314,16 @@ const footerImg = document.createElement('img');
 footerImg.src = "./images/GitHub-Mark-32px.png";
 footerImg.alt = "github picture";
 footerGit.href = "https://github.com/heinohen";
-footerGit.appendChild(footerImg);
 
-footer.appendChild(footerLegal);
-footer.appendChild(footerGit);
+
+
+
+
+
+
+
+
+
+
+
+
