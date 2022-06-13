@@ -213,7 +213,14 @@ function addComma() {
     }
 }
 
-function insertOperator(operator) {sum = "Cannot / by 0";
+function insertOperator(operator) {
+    calculated = false;
+
+    if (firstOperator == null && operator == "=") {
+        return;
+    }
+    if  (firstOperator == null) {
+        firstNumber = displayValue;
         firstOperator = operator;
         displayValue = "";
         updateScreen();
