@@ -161,7 +161,7 @@ let secondNumber = null;
 let firstOperator = null;
 let secondOperator = null;
 let sum = null;
-let calculated = false;
+let calculated;
 let displayValue = calcNumberInput.value;
 
 
@@ -180,9 +180,6 @@ function clearScreen() {
 
 
 function appendScreen(num) {
-    if (calculated) {
-        return;
-    } else {
         if (displayValue.length >= 15){return;}
         if (displayValue == "0") {
         console.log(num);
@@ -194,8 +191,7 @@ function appendScreen(num) {
         updateScreen();
         }
     }
- 
-}
+
 
 function changePositive() {
     displayValue = Number(displayValue * -1);
