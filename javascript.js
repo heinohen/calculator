@@ -161,7 +161,8 @@ let secondNumber = null;
 let firstOperator = null;
 let secondOperator = null;
 let sum = null;
-let calculated;
+let calculated = false;
+let chaining = false;
 let displayValue = calcNumberInput.value;
 
 
@@ -176,21 +177,11 @@ function clearScreen() {
     secondNumber = null;
     firstOperator = null;
     secondOperator = null;
+    calculated = false;
+    chaining = true;
+    console.log("clear screen. calculated", calculated)
 }
 
-
-function appendScreen(num) {
-        if (displayValue.length >= 15){return;}
-        if (displayValue == "0") {
-        console.log(num);
-        displayValue = num;
-        updateScreen();
-        } else {
-        displayValue += num;
-        console.log(num);
-        updateScreen();
-        }
-    }
 
 
 function changePositive() {
@@ -199,6 +190,7 @@ function changePositive() {
 }
 
 function addComma() {
+    console.log(".")
     if (displayValue.indexOf(".") > -1) {
         return;
     }
@@ -213,6 +205,11 @@ function addComma() {
 
 function insertOperator(operator) {
     calculated = false;
+    console.log(operator)
+
+    if (firstOperator == "=") {
+        return;
+    }
 
     if (firstOperator == null && operator == "=") {
         return;
@@ -239,9 +236,16 @@ function insertOperator(operator) {
     } else {
         makeCalculation(firstNumber, secondNumber, firstOperator);
         console.log("chaining");
+        chaining = true;
         firstNumber = sum;
         secondNumber = null;
         displayValue = sum;
+        console.log(`first number ${firstNumber}\n`,
+                    `second number ${secondNumber}\n`,
+                    `display value ${displayValue}\n`,
+                    `operators 1${firstOperator},2${secondOperator}`)
+        firstOperator = secondOperator;
+        secondOperator = null;
         updateScreen();
     }
     console.log("is it calculated", calculated)
@@ -275,6 +279,27 @@ function makeCalculation(firstNumber, secondNumber, firstOperator) {
             break;
     }
 }
+
+function appendScreen(num) {
+    if (calculated) {
+        return;
+    }
+    if (chaining) {
+        displayValue = "";
+        updateScreen();
+    }
+    if (displayValue.length >= 15){return;}
+    if (displayValue == "0") {
+    console.log(num);
+    displayValue = num;
+    updateScreen();
+    } else {
+    displayValue += num;
+    console.log(num);
+    updateScreen();
+    }
+}
+
 
 
 
