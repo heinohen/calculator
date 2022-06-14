@@ -11,7 +11,7 @@ headline.setAttribute('id', 'headline');
 const headerPara = document.createElement('p');
 headerPara.setAttribute('class', 'headerPara');
 headerPara.setAttribute('id', 'headerPara');
-headerPara.textContent = "CALCUGATOR 30000";
+headerPara.textContent = "CALCUGATOR DOM-30000";
 headline.appendChild(headerPara);
 header.appendChild(headline);
 
@@ -34,7 +34,7 @@ calcNamePara.setAttribute('id', 'calcNamePara');
 calcNamePara.textContent = "CALCUGATOR"
 calcStylePara.setAttribute('class', 'calcStylePara');
 calcStylePara.setAttribute('id', 'calcStylePara');
-calcStylePara.textContent = "30000";
+calcStylePara.textContent = "DOM-30000";
 calcNameDiv.appendChild(calcNamePara);
 calcNameDiv.appendChild(calcStylePara);
 
