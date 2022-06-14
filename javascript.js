@@ -21,6 +21,24 @@ calculator.setAttribute('class', 'calculator');
 calculator.setAttribute('id', 'calculator');
 main.appendChild(calculator)
 
+//footer
+const footerLegal = document.createElement('p');
+footerLegal.setAttribute('class', 'footerPara');
+footerLegal.textContent = "(C) heinohen 2022";
+
+const footerGit = document.createElement('a');
+footerGit.setAttribute('id', 'gitLink');
+const footerImg = document.createElement('img');
+footerImg.src = "./images/GitHub-Mark-32px.png";
+footerImg.alt = "github picture";
+
+footerGit.appendChild(footerImg);
+footerGit.href = "https://github.com/heinohen";
+
+footer.appendChild(footerLegal);
+footer.appendChild(footerGit)
+
+
 //calculator frame
 const calcNameDiv = document.createElement('div');
 calcNameDiv.setAttribute('class', 'calcNameDiv');
@@ -300,10 +318,6 @@ function appendScreen(num) {
     }
 }
 
-
-
-
-
 buttonC.onclick = () => clearScreen()
 button7.onclick = () => appendScreen("7")
 button8.onclick = () => appendScreen("8")
@@ -324,17 +338,6 @@ buttonPlus.onclick = () => insertOperator("+");
 buttonMinus.onclick = () => insertOperator("-");
 
 
-//footer
-const footerLegal = document.createElement('p');
-footerLegal.setAttribute('class', 'footerPara');
-footerLegal.textContent = "(C) heinohen 2022";
-
-const footerGit = document.createElement('a');
-footerGit.setAttribute('id', 'gitLink');
-const footerImg = document.createElement('img');
-footerImg.src = "./images/GitHub-Mark-32px.png";
-footerImg.alt = "github picture";
-footerGit.href = "https://github.com/heinohen";
 
 
 
